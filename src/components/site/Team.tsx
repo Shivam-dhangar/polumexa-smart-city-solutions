@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Linkedin, Twitter, Mail, Github } from "lucide-react";
 import { SectionHeader } from "./About";
+import sanskarImg from "@/assets/sanskar.jpg";
 
 export function Team() {
   return (
@@ -20,8 +21,12 @@ export function Team() {
           >
             <div className="absolute -top-20 inset-x-0 mx-auto w-56 h-56 rounded-full bg-eco/25 blur-3xl" />
             <div className="relative">
-              <div className="mx-auto w-28 h-28 rounded-full bg-gradient-to-br from-eco to-cyan-accent grid place-items-center text-4xl font-display font-bold text-primary-foreground ring-4 ring-border">
-                SP
+              <div className="mx-auto w-28 h-28 rounded-full ring-4 ring-border overflow-hidden">
+                <img
+                  src={sanskarImg}
+                  alt="Sanskar Patwa"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="mt-5 font-display font-bold text-2xl">Sanskar Patwa</h3>
               <p className="mt-1 text-sm text-eco font-medium">Co-Founder &amp; CEO</p>
