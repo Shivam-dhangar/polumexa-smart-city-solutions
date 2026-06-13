@@ -11,6 +11,7 @@ import { Industries } from "@/components/site/Industries";
 import { Government } from "@/components/site/Government";
 import { Testimonials } from "@/components/site/Testimonials";
 import { Team } from "@/components/site/Team";
+import { Pricing } from "@/components/site/Pricing";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { Chatbot } from "@/components/site/Chatbot";
@@ -56,6 +57,7 @@ function Index() {
         <Government />
         <Testimonials />
         <Team />
+        <Pricing />
         <Contact />
       </motion.main>
       <Footer />

@@ -1,18 +1,59 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Mail, Phone, Send, CheckCircle2 } from "lucide-react";
+import { MapPin, Mail, Phone, Send, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { SectionHeader } from "./About";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", org: "", message: "" });
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    setForm({ name: "", email: "", org: "", message: "" });
+    setError("");
+
+    const formspreeId = (import.meta.env.VITE_FORMSPREE_ID as string | undefined)?.trim();
+
+    if (!formspreeId) {
+      // Fallback: open mail client with pre-filled data
+      const subject = `Demo Request from ${form.name}${form.org ? ` (${form.org})` : ""}`;
+      const body = `Name: ${form.name}\nEmail: ${form.email}\nOrganization: ${form.org || "N/A"}\n\nMessage:\n${form.message}`;
+      window.open(
+        `mailto:hello@polumexa.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+      );
+      setSent(true);
+      setForm({ name: "", email: "", org: "", message: "" });
+      setTimeout(() => setSent(false), 5000);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          organization: form.org,
+          message: form.message,
+        }),
+      });
+
+      if (res.ok) {
+        setSent(true);
+        setForm({ name: "", email: "", org: "", message: "" });
+        setTimeout(() => setSent(false), 6000);
+      } else {
+        setError("Something went wrong. Please email us directly at hello@polumexa.com");
+      }
+    } catch {
+      setError("Network error. Please email us at hello@polumexa.com");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,13 +162,32 @@ export function Contact() {
               />
             </Field>
 
+            {error && (
+              <div className="flex items-center gap-2 text-sm text-destructive">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
-              disabled={sent}
+              disabled={sent || loading}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold btn-glow disabled:opacity-70"
             >
-              {sent ? (<><CheckCircle2 className="w-4 h-4" /> Message sent</>) : (<>Send Message <Send className="w-4 h-4" /></>)}
+              {loading ? (
+                <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
+              ) : sent ? (
+                <><CheckCircle2 className="w-4 h-4" /> Message sent!</>
+              ) : (
+                <>Send Message <Send className="w-4 h-4" /></>
+              )}
             </button>
+
+            {sent && (
+              <p className="text-xs text-eco">
+                Thanks! We'll get back to you within one business day.
+              </p>
+            )}
           </motion.form>
         </div>
       </div>

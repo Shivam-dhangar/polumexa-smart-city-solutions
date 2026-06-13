@@ -54,10 +54,10 @@ export function Navbar() {
         </ul>
 
         <a
-          href="#contact"
+          href="#dashboard"
           className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-sm font-medium btn-glow"
         >
-          Request Demo
+          Live Demo
         </a>
 
         <button
@@ -91,11 +91,11 @@ export function Navbar() {
               ))}
               <li>
                 <a
-                  href="#contact"
+                  href="#dashboard"
                   onClick={() => setOpen(false)}
                   className="inline-flex w-full justify-center items-center px-4 py-2 rounded-full text-sm font-medium btn-glow"
                 >
-                  Request Demo
+                  Live Demo
                 </a>
               </li>
             </ul>

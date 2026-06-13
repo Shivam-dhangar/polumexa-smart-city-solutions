@@ -20,8 +20,13 @@ export function Footer() {
               that turns every bin into intelligent infrastructure.
             </p>
             <div className="mt-5 flex gap-3">
-              {[Linkedin, Twitter, Github, Instagram].map((Icon, i) => (
-                <a key={i} href="#contact" aria-label="Social"
+              {[
+                { Icon: Linkedin, href: "https://linkedin.com/company/polumexa", label: "LinkedIn" },
+                { Icon: Twitter, href: "https://twitter.com/polumexa", label: "Twitter / X" },
+                { Icon: Github, href: "https://github.com/polumexa", label: "GitHub" },
+                { Icon: Instagram, href: "https://instagram.com/polumexa", label: "Instagram" },
+              ].map(({ Icon, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="grid place-items-center w-9 h-9 rounded-lg glass hover:bg-gradient-to-br hover:from-eco hover:to-cyan-accent hover:text-primary-foreground transition">
                   <Icon className="w-4 h-4" />
                 </a>
@@ -36,6 +41,7 @@ export function Footer() {
               <li><a href="#dashboard" className="hover:text-eco transition">Live Demo</a></li>
               <li><a href="#bins" className="hover:text-eco transition">Smart Bins</a></li>
               <li><a href="#carbon" className="hover:text-eco transition">Carbon Impact</a></li>
+              <li><a href="#pricing" className="hover:text-eco transition">Pricing</a></li>
             </ul>
           </div>
 
