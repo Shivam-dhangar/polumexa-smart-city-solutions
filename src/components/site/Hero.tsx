@@ -72,8 +72,8 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="mt-9 flex flex-wrap gap-4"
           >
-            <a href="#dashboard" className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold btn-glow">
-              Live Demo <ArrowRight className="w-4 h-4" />
+            <a href="/login" className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold btn-glow">
+              Try Demo <ArrowRight className="w-4 h-4" />
             </a>
             <a
               href="#features"

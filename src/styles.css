@@ -138,6 +138,19 @@
     background-size: 48px 48px;
   }
   .ring-eco { box-shadow: 0 0 0 1px oklch(0.78 0.19 152 / 0.3), 0 0 30px -10px oklch(0.78 0.19 152 / 0.6); }
+  .input-field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    background: var(--secondary);
+    border: 1px solid var(--color-border);
+    color: var(--foreground);
+    font-size: 0.75rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  .input-field:focus { box-shadow: 0 0 0 2px oklch(0.78 0.19 152 / 0.4); }
+  .input-field option { background: oklch(0.18 0.03 168); }
 }
 
 @keyframes float-slow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }

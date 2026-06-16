@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X, Leaf, LayoutDashboard } from "lucide-react";
+import { getStoredUser } from "@/lib/auth";
 
 const links = [
   { href: "#about", label: "About" },
@@ -13,12 +14,17 @@ const links = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsLoggedIn(!!getStoredUser());
   }, []);
 
   return (
@@ -53,12 +59,18 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#dashboard"
-          className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-sm font-medium btn-glow"
-        >
-          Live Demo
-        </a>
+        <div className="hidden md:flex items-center gap-3">
+          <a href="#dashboard" className="text-sm text-muted-foreground hover:text-foreground transition">
+            Live Demo
+          </a>
+          <a
+            href={isLoggedIn ? "/dashboard" : "/login"}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium btn-glow"
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            {isLoggedIn ? "Dashboard" : "Try Demo"}
+          </a>
+        </div>
 
         <button
           aria-label="Toggle menu"
@@ -91,11 +103,12 @@ export function Navbar() {
               ))}
               <li>
                 <a
-                  href="#dashboard"
+                  href={isLoggedIn ? "/dashboard" : "/login"}
                   onClick={() => setOpen(false)}
-                  className="inline-flex w-full justify-center items-center px-4 py-2 rounded-full text-sm font-medium btn-glow"
+                  className="inline-flex w-full justify-center items-center gap-2 px-4 py-2 rounded-full text-sm font-medium btn-glow"
                 >
-                  Live Demo
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  {isLoggedIn ? "Dashboard" : "Try Demo"}
                 </a>
               </li>
             </ul>
